@@ -1,64 +1,88 @@
 package com.example.temperatureapp;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.StringTokenizer;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String SERVER = "http://10.0.2.2:3001/";
+
+    private TextView tempHouse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        handleGetTempDialog();
+        tempHouse = findViewById(R.id.textViewHouse);
 
+        HttpGetRequest request = new HttpGetRequest();
+        request.execute();
     }
 
-    private void handleGetTempDialog() {
-        final TextView tempHouse = (TextView) findViewById(R.id.textViewHouse);
+    public class HttpGetRequest extends AsyncTask<String, Void, String> {
+        static final String REQUEST_METHOD = "GET";
+        static final int READ_TIMEOUT = 15000;
+        static final int CONNECTION_TIMEOUT = 15000;
 
-        Retrofit.Builder builder = new Retrofit.Builder().baseUrl("http://localhost:3001")
-                .addConverterFactory(GsonConverterFactory.create());
 
-        Retrofit retrofit = builder.build();
+        @Override
+        protected String doInBackground(String... params) {
+            String result;
+            String inputLine;
 
-        RetrofitInterface client = retrofit.create(RetrofitInterface.class);
-        Call<List<TemperatureResult>> call = client.myTemp("temperature");
+            try {
+                URL myUrl = new URL(SERVER);
+                HttpURLConnection connection = (HttpURLConnection)
+                        myUrl.openConnection();
 
-        call.enqueue(new Callback<List<TemperatureResult>>() {
-            @Override
-            public void onResponse(Call<List<TemperatureResult>> call, Response<List<TemperatureResult>> response) {
-                List <TemperatureResult> temperature = response.body();
-                tempHouse.setText(temperature.toString());
+                connection.setRequestMethod(REQUEST_METHOD);
+                connection.setReadTimeout(READ_TIMEOUT);
+                connection.setConnectTimeout(CONNECTION_TIMEOUT);
 
+                connection.connect();
+
+                InputStreamReader streamReader = new
+                        InputStreamReader(connection.getInputStream());
+
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((inputLine = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine);
+                }
+
+                reader.close();
+                streamReader.close();
+
+                result = stringBuilder.toString();
+            }
+            catch(IOException e) {
+                e.printStackTrace();
+                result = "error";
             }
 
-            @Override
-            public void onFailure(Call<List<TemperatureResult>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "error :(", Toast.LENGTH_SHORT).show();
-            }
-        });
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            tempHouse.setText(result);
+        }
     }
+
 }
+
+
+

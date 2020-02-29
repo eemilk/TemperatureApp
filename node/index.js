@@ -1,18 +1,14 @@
-const express = require('request')
+const http = require('http')
 
-const key = "8827c126650cab89acad3db4b1e8917c";
-const latitude = 65; 
-const longitude = 25.5; 
-const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`;
-const KELVIN = 273;
+const hostname = '127.0.0.1'
+const PORT = 3001
 
-request(url, function(err, response, body) {
-    if(err) {
-        console.log('error', error)
-    } else {
-        let weather = JSON.parse(body)
-        let celcius = weather.main.temp - KELVIN
-        let message = `It's ${celcius} degrees in ${weather.name}!`
-        console.log(message)
-    }
-});
+const server = http.createServer((req, res) =>  {
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/plain')
+    res.end('Hello World\n')
+})
+
+server.listen(PORT, hostname, () => {
+    console.log(`Server running at http://${hostname}:${PORT}/`)
+})
