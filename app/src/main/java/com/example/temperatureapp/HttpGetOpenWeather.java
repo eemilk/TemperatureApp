@@ -14,7 +14,7 @@ import java.net.URL;
 
 import static android.provider.Telephony.Carriers.SERVER;
 
-public class HttpGetRequest extends AsyncTask<String, Void, String> {
+public class HttpGetOpenWeather extends AsyncTask<String, Void, String> {
     Context context;
 
     private static final String SERVER = "http://10.0.2.2:3001/";
