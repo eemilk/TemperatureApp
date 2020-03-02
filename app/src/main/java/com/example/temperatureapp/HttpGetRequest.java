@@ -17,7 +17,7 @@ import static android.provider.Telephony.Carriers.SERVER;
 public class HttpGetRequest extends AsyncTask<String, Void, String> {
     Context context;
 
-    private static final String SERVER = "http://10.0.2.2:3001/";
+    private static final String SERVER = "http://ec2-34-201-22-53.compute-1.amazonaws.com:3001/";
     static final String REQUEST_METHOD = "GET";
     static final int READ_TIMEOUT = 15000;
     static final int CONNECTION_TIMEOUT = 15000;
@@ -70,6 +70,6 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         TextView tempView = (TextView) ((Activity)context).findViewById(R.id.textViewHouse);
-        tempView.setText(result);
+        tempView.setText(result + " C");
     }
 }

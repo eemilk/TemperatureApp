@@ -16,15 +16,20 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tempHouse;
+    private TextView tempOutside;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tempHouse = (TextView) findViewById(R.id.textHouseValue);
+        tempOutside = (TextView) findViewById(R.id.textOutsideValue);
 
-        HttpGetRequest request = new HttpGetRequest(this);
-        request.execute();
+        HttpGetRequest requestTemperature = new HttpGetRequest(this);
+        requestTemperature.execute();
+
+        HttpGetOpenWeather requestWeather = new HttpGetOpenWeather(this);
+        requestWeather.execute();
     }
 
 }
