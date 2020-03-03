@@ -5,12 +5,12 @@ Small personal project to see my indoors temperature and outdoors weather in a q
 
 Example of earlier version of my NodeJs REST API https://github.com/eemilk/TemperatureApp/blob/master/node/index.js
 
-My Raspberry Pi thermosendor data to database script: https://github.com/eemilk/DB-sendvalues-python/blob/master/dbconnection.py
+My Raspberry Pi script to log thermosensor data to database: https://github.com/eemilk/DB-sendvalues-python/blob/master/dbconnection.py
 
 ## Stack used
 - Androidstudio Java
 - NodeJs, Express API
-- AWS EC2
+- AWS EC2 Ubuntu Server
 - MySQL AWS RDS hosting
 - Python script to log temperature with Raspberry Pi from thermosensor to database
 
