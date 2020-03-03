@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
         HttpGetOpenWeather requestWeather = new HttpGetOpenWeather(this);
         requestWeather.execute();
+
+        HttpGetOpenWeatherIcon requestIcon = new HttpGetOpenWeatherIcon(this);
+        requestIcon.execute();
     }
 
 }
