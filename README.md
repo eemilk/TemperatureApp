@@ -1,5 +1,5 @@
 # TemperatureApp
-Android App which connects my Node RESTful API server hosted by EC2 and gets inhouse temperature from database and outside weather by fetching a openweathermap API
+Android App which connects my Node API hosted by EC2 and gets inhouse temperature from database and outside weather by fetching a openweathermap API
 
 Small personal project to see my indoors temperature and outdoors weather in a quick glimpse from my android app.
 
