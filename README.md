@@ -3,10 +3,6 @@ Android App which connects my Node API hosted by EC2 and gets inhouse temperatur
 
 Small personal project to see my indoors temperature and outdoors weather in a quick glimpse from my android app.
 
-Example of earlier version of my NodeJs REST API https://github.com/eemilk/TemperatureApp/blob/master/node/index.js
-
-My Raspberry Pi script to log thermosensor data to database: https://github.com/eemilk/DB-sendvalues-python/blob/master/dbconnection.py
-
 ## Stack used
 - Androidstudio Java
 - NodeJs, Express API
